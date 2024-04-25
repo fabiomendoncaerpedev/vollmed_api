@@ -57,4 +57,11 @@ public class PacienteController {
         paciente.atualizarInformacoes(dados);
         return ResponseEntity.ok(new DadosDetalhamentoPaciente(paciente));
     }
+
+    @GetMapping("{id}")
+    public ResponseEntity detalhar(@PathVariable Long id) {
+        Paciente paciente = repository.getReferenceById(id);
+
+        return ResponseEntity.ok(new DadosDetalhamentoPaciente(paciente));
+    }
 }
