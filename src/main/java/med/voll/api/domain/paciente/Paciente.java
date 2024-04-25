@@ -39,4 +39,8 @@ public class Paciente {
         if (dados.nome() != null)
             this.nome = dados.nome();
     }
+
+    public void excluir() {
+        this.ativo = false;
+    }
 }
