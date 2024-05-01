@@ -27,9 +27,9 @@ public class Consulta {
     @JoinColumn(name = "paciente_id")
     private Paciente paciente;
     private LocalDateTime data;
-    private Boolean ativo;
+    private String motivoCancelamento;
 
-    public void cancelarAgendamento() {
-        this.ativo = false;
+    public void cancelarAgendamento(String motivoCancelamento) {
+        this.motivoCancelamento = motivoCancelamento;
     }
 }
