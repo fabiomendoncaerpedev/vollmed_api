@@ -19,6 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest
@@ -68,28 +70,28 @@ class MedicoControllerTest {
                 especialidade,
                 endereco
         );
+        DadosCadastroMedico dadosCadastroMedico = new DadosCadastroMedico(
+                "Phavio",
+                "phavio@voll.med",
+                "79991935136",
+                "123456",
+                especialidade,
+                new DadosEndereco(
+                        "AV Deputado Pedro valadares",
+                        "Jardins",
+                        "49025090",
+                        "Aracaju",
+                        "Sergipe",
+                        "Edf Manhattan",
+                        "875"
+                )
+        );
+        when(repository.save(any())).thenReturn(new Medico(dadosCadastroMedico));
         MockHttpServletResponse response = mvc
                 .perform(
                         post("/medicos")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(dadosCadastroMedicoJson.write(
-                                        new DadosCadastroMedico(
-                                                "Phavio",
-                                                "phavio@voll.med",
-                                                "79991935136",
-                                                "123456",
-                                                especialidade,
-                                                new DadosEndereco(
-                                                        "AV Deputado Pedro valadares",
-                                                        "Jardins",
-                                                        "49025090",
-                                                        "Aracaju",
-                                                        "Sergipe",
-                                                        "Edf Manhattan",
-                                                        "875"
-                                                )
-                                        )
-                                ).getJson())
+                                .content(dadosCadastroMedicoJson.write(dadosCadastroMedico).getJson())
                 )
                 .andReturn().getResponse();
 
